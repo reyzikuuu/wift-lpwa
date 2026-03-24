@@ -1,0 +1,1057 @@
+@import "tailwindcss";
+
+/* =========================================
+   Tailwind Theme — Font Utilities Only
+   (Terus pakai @theme agar 'font-heading'
+    bisa dipakai sebagai Tailwind class)
+========================================= */
+@theme {
+  --font-heading: 'Geist', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+}
+
+/* =========================================
+   Design Tokens — DEFAULT: Dark Mode
+   Dark adalah tampilan default untuk semua layar.
+   Light aktif hanya jika html[data-theme="light"]
+========================================= */
+:root {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --color-bg-primary:       #171717;
+  --color-bg-secondary:     #1f1f1f;
+  --color-bg-elevated:      #272727;
+
+  /* Labels */
+  --color-label:            #F5F5F5;
+  --color-label-secondary:  rgba(245,245,245,0.60);
+  --color-label-tertiary:   rgba(245,245,245,0.30);
+
+  /* Accent */
+  --color-accent:           #0A84FF;
+  --color-accent-hover:     #3DA1FF;
+  --color-accent-light:     rgba(10,132,255,0.15);
+
+  /* System */
+  --color-success:          #30D158;
+  --color-warning:          #FF9F0A;
+  --color-danger:           #FF453A;
+
+  /* Separators */
+  --color-separator:        rgba(255,255,255,0.12);
+  --color-separator-subtle: rgba(255,255,255,0.06);
+
+  /* Fills */
+  --color-fill:             rgba(255,255,255,0.12);
+  --color-fill-secondary:   rgba(255,255,255,0.08);
+
+  /* Grays */
+  --color-gray-1: #8E8E93;
+  --color-gray-2: #636366;
+  --color-gray-3: #48484A;
+  --color-gray-4: #3A3A3C;
+  --color-gray-5: #272727;
+  --color-gray-6: #1f1f1f;
+
+  /* Glass */
+  --bg-glass:   rgba(23,23,23,0.82);
+  --blur-glass: saturate(160%) blur(20px);
+
+  /* Border Radius */
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-2xl: 28px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.40), 0 1px 2px rgba(0,0,0,0.25);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.30);
+
+  /* Layout */
+  --navbar-height: 56px;
+
+  /* Grid */
+  --color-grid-line: rgba(255,255,255,0.06);
+}
+
+/* =========================================
+   Light Mode — aktif via JS toggle
+   html[data-theme="light"]
+========================================= */
+html[data-theme="light"] {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --color-bg-primary:       #FFFFFF;
+  --color-bg-secondary:     #F2F2F7;
+  --color-bg-elevated:      #FFFFFF;
+
+  /* Labels */
+  --color-label:            #1A1A1A;
+  --color-label-secondary:  rgba(60,60,67,0.6);
+  --color-label-tertiary:   rgba(60,60,67,0.3);
+
+  /* Accent */
+  --color-accent:           #007AFF;
+  --color-accent-hover:     #0062CC;
+  --color-accent-light:     rgba(0,122,255,0.12);
+
+  /* System */
+  --color-success:          #34C759;
+  --color-warning:          #FF9500;
+  --color-danger:           #FF3B30;
+
+  /* Separators */
+  --color-separator:        rgba(60,60,67,0.29);
+  --color-separator-subtle: rgba(60,60,67,0.12);
+
+  /* Fills */
+  --color-fill:             rgba(120,120,128,0.20);
+  --color-fill-secondary:   rgba(120,120,128,0.16);
+
+  /* Grays */
+  --color-gray-1: #8E8E93;
+  --color-gray-2: #AEAEB2;
+  --color-gray-3: #C7C7CC;
+  --color-gray-4: #D1D1D6;
+  --color-gray-5: #E5E5EA;
+  --color-gray-6: #F2F2F7;
+
+  /* Glass */
+  --bg-glass:   rgba(255,255,255,0.72);
+  --blur-glass: saturate(180%) blur(20px);
+
+  /* Shadows */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.05);
+
+  /* Grid */
+  --color-grid-line: rgba(0,0,0,0.07);
+}
+
+/* =========================================
+   Base Reset
+========================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--navbar-height); }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-label);
+  background-color: var(--color-bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+img, video { max-width: 100%; height: auto; display: block; }
+a { color: var(--color-accent); text-decoration: none; }
+
+/* =========================================
+   Background Grid — Faded
+   Pure CSS, no extra HTML needed.
+   Otomatis light/dark via CSS var.
+========================================= */
+body {
+  position: relative; /* Diperlukan agar ::before terpasang */
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  /* Grid lines */
+  background-image:
+    linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+
+  /* Radial fade — grid terlihat di tengah, memudar ke tepi */
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 70% at 50% 40%,
+    black 0%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 70% at 50% 40%,
+    black 0%,
+    transparent 100%
+  );
+}
+
+/* Semua konten di atas grid */
+.navbar, main, header, footer, section {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   NAVBAR — iOS Frosted Glass Style
+   Light Mode
+========================================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--navbar-height);
+  background: var(--bg-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  backdrop-filter: var(--blur-glass);
+  border-bottom: 0.5px solid var(--color-separator-subtle);
+  transition: box-shadow 0.25s ease;
+}
+
+/* Shadow muncul saat user scroll — ditambahkan via JS */
+.navbar.is-scrolled {
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1160px;
+  height: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  gap: 1.5rem;
+}
+
+/* --- Logo --- */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* --- Logo Image --- */
+.navbar__logo-img {
+  display: block;
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Default (dark): tampilkan light-logo, sembunyikan dark-logo */
+.navbar__logo-img--dark  { display: none; }
+.navbar__logo-img--light { display: block; }
+
+/* Light mode: tampilkan dark-logo, sembunyikan light-logo */
+html[data-theme="light"] .navbar__logo-img--light { display: none; }
+html[data-theme="light"] .navbar__logo-img--dark  { display: block; }
+
+/* --- Nav Links --- */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  margin-left: auto; /* Push ke kanan */
+  padding: 0;
+}
+
+.navbar__link {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-label);
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.navbar__link:hover {
+  background-color: var(--color-fill-secondary);
+  color: var(--color-label);
+}
+
+.navbar__link--muted {
+  color: var(--color-label-secondary);
+}
+
+.navbar__link--muted:hover {
+  color: var(--color-label);
+}
+
+/* --- Actions (kanan) --- */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+/* --- CTA Button --- */
+.navbar__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4375rem 1rem;
+  border-radius: 980px; /* iOS pill shape */
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--color-accent);
+  text-decoration: none;
+  line-height: 1;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.navbar__cta:hover {
+  background-color: var(--color-accent-hover);
+  transform: scale(1.02);
+}
+
+.navbar__cta:active {
+  transform: scale(0.98);
+}
+
+.navbar__cta--full {
+  width: 100%;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+}
+
+/* WhatsApp variant — warna hijau WhatsApp */
+.navbar__cta--wa {
+  background-color: #25D366;
+  gap: 0.4rem;
+}
+
+.navbar__cta--wa:hover {
+  background-color: #1ebe5d;
+}
+
+/* --- Hamburger (mobile) --- */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.navbar__hamburger:hover {
+  background-color: var(--color-fill-secondary);
+}
+
+.navbar__hamburger span {
+  display: block;
+  height: 1.5px;
+  border-radius: 2px;
+  background-color: var(--color-label);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Hamburger → X saat menu terbuka */
+.navbar__hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.navbar__hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.navbar__hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* --- Mobile Menu --- */
+.navbar__mobile {
+  display: none;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1.25rem 1.25rem;
+  background: var(--bg-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  backdrop-filter: var(--blur-glass);
+  border-top: 0.5px solid var(--color-separator-subtle);
+  /* hidden by default */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.navbar__mobile.is-open {
+  display: flex;
+  max-height: 400px;
+}
+
+.navbar__mobile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.navbar__mobile-link {
+  display: block;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-label);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.navbar__mobile-link:hover {
+  background-color: var(--color-fill-secondary);
+}
+
+/* @media prefers-color-scheme intentionally removed.
+   Theme sepenuhnya dikontrol via JS toggle (data-theme attribute). */
+
+/* =========================================
+   Responsive Navbar
+========================================= */
+@media (max-width: 768px) {
+  .navbar__links   { display: none; }
+  .navbar__actions { display: none; }
+  .navbar__hamburger { display: flex; }
+
+  /* .navbar__theme-toggle tetap tampil (tidak di-hide) */
+
+  .navbar {
+    flex-direction: column;
+    height: auto;
+  }
+
+  /* Pastikan row logo+toggle+hamburger selalu setinggi navbar-height dan center vertikal */
+  .navbar__inner {
+    min-height: var(--navbar-height);
+    height: auto;
+    align-items: center;
+  }
+}
+
+/* =========================================
+   Theme Toggle Button
+========================================= */
+.navbar__theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-separator);
+  background: transparent;
+  color: var(--color-label-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.navbar__theme-toggle:hover {
+  background-color: var(--color-fill-secondary);
+  color: var(--color-label);
+}
+
+/* Icon visibility: default dark → tampilkan ikon matahari (switch ke light) */
+.navbar__theme-toggle .icon-sun  { display: block; }
+.navbar__theme-toggle .icon-moon { display: none;  }
+
+/* Saat light mode aktif → tampilkan ikon bulan (switch ke dark) */
+html[data-theme="light"] .navbar__theme-toggle .icon-sun  { display: none;  }
+html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
+
+/* Sembunyikan toggle desktop di mobile — toggle ada di dalam hamburger menu */
+@media (max-width: 768px) {
+  .navbar__theme-toggle--desktop { display: none; }
+}
+
+/* Toggle row di dalam mobile menu */
+.navbar__mobile-theme {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-top: 0.5px solid var(--color-separator-subtle);
+  margin-top: 0.5rem;
+}
+
+.navbar__mobile-theme-label {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: var(--color-label-secondary);
+}
+
+/* Light mode hero overlay override (mobile) */
+@media (max-width: 768px) {
+  html[data-theme="light"] .hero__bg::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.30)  0%,
+      rgba(255,255,255,0.50) 20%,
+      rgba(255,255,255,0.72) 45%,
+      rgba(255,255,255,0.88) 70%,
+      rgba(255,255,255,0.97) 90%,
+      rgba(255,255,255,1.00) 100%
+    );
+  }
+}
+
+/* =========================================
+   Accessibility — Reduced Motion
+========================================= */
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__link,
+  .navbar__cta,
+  .navbar__hamburger span,
+  .navbar__mobile {
+    transition: none;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* =========================================
+   Gradient Text Utility
+   Dipakai untuk kata/frasa yang ingin
+   menonjol di atas teks biasa
+========================================= */
+.text-gradient {
+  /* Champagne Gold — elegan, bukan gold mencolok */
+  background: linear-gradient(
+    135deg,
+    #F0D060 0%,    /* Pale gold */
+    #D4AF37 40%,   /* Classic gold */
+    #A87820 75%,   /* Deep amber gold */
+    #C9922A 100%   /* Warm cognac */
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  display: inline;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* =========================================
+   Hero Section
+========================================= */
+.hero {
+  position: relative;          /* Anchor untuk bg absolute */
+  overflow: hidden;
+  padding-top: calc(var(--navbar-height) + 5rem);
+  padding-bottom: 5rem;
+  padding-inline: 1.5rem;
+  text-align: center;
+}
+
+/* --- Background Slideshow --- */
+
+/* Desktop: disembunyikan — hanya aktif di mobile */
+.hero__bg {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero__bg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__bg-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+    will-change: opacity;
+  }
+
+  .hero__bg-slide.is-active {
+    opacity: 1;
+  }
+
+  /* Gradient overlay — halus, multi-stop, ease-in curve */
+  .hero__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.30)  0%,
+      rgba(255,255,255,0.50) 20%,
+      rgba(255,255,255,0.72) 45%,
+      rgba(255,255,255,0.88) 70%,
+      rgba(255,255,255,0.97) 90%,
+      rgba(255,255,255,1.00) 100%
+    );
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+  .hero__bg::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(23,23,23,0.25)  0%,
+      rgba(23,23,23,0.45) 20%,
+      rgba(23,23,23,0.65) 45%,
+      rgba(23,23,23,0.82) 70%,
+      rgba(23,23,23,0.94) 90%,
+      rgba(23,23,23,1.00) 100%
+    );
+  }
+}
+
+/* Konten di atas background */
+.hero__container {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+/* =========================================
+   Social Proof Banner
+========================================= */
+.social-proof {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 1.5rem;
+  background-color: var(--color-bg-primary); /* Blend borderless default */
+  border-top: 1px solid var(--color-separator-subtle);
+}
+
+.social-proof__container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  text-align: center;
+}
+
+.social-proof__divider {
+  width: 1px;
+  height: 60px;
+  background-color: var(--color-separator);
+}
+
+.social-proof__number {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 500;
+  color: var(--color-label);
+  line-height: 1;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.social-proof__number span {
+  display: inline-block;
+  font-variant-numeric: tabular-nums; /* Monospace angka agar animasinya rapih */
+  min-width: 3ch; /* Mencegah layout shift */
+}
+
+/* Lebar spesial untuk angka 10.000+ agar tidak goyang */
+#counter-terjual {
+  min-width: 5ch;
+  text-align: right;
+}
+
+.social-proof__label {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-label-secondary);
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 640px) {
+  .social-proof__container {
+    flex-direction: row; /* Tetap 1 baris */
+    gap: 1.5rem; /* Kurangi gap agar muat */
+  }
+  .social-proof__number {
+    font-size: clamp(2rem, 7vw, 2.5rem); /* Angka sedikit lebih kecil di mobile */
+  }
+  .social-proof__label {
+    font-size: 0.8125rem; /* Label lebih kecil */
+  }
+  .social-proof__divider {
+    height: 48px; /* Divider sedikit lebih pendek */
+    width: 1px;
+  }
+}
+
+/* =========================================
+   Trust Marks (Mitra Terpercaya)
+========================================= */
+.trust-marks {
+  padding: 4rem 0;
+  background-color: var(--color-bg-primary);
+  border-top: 1px solid var(--color-separator-subtle);
+  overflow: hidden; /* Mencegah overflow horizontal pada mobile */
+}
+
+.trust-marks__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-inline: 1.5rem;
+}
+
+.trust-marks__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 500;
+  color: var(--color-label);
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem 0;
+}
+
+.trust-marks__subtitle {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-label-secondary);
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Carousel Container: menggunakan gradient mask (kiri-kanan) untuk menyamarkan pop in/out */
+.trust-marks__carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+  /* Membuat fade effect di tepi kiri dan tepi kanan */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.trust-marks__track {
+  display: flex;
+  width: max-content;
+  /* Animasi bergerak terus menerus ke kiri */
+  animation: scroll-infinity 30s linear infinite;
+}
+
+.trust-marks__track:hover {
+  animation-play-state: paused;
+}
+
+/* Group berisi 11 logo */
+.trust-marks__group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 3rem;
+  padding-right: 3rem; /* Spacing sebelum group duplicate dimulai */
+}
+
+.trust-marks__group img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(50%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.trust-marks__group img:hover {
+  filter: grayscale(0%) opacity(100%);
+  transform: scale(1.05);
+}
+
+@keyframes scroll-infinity {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Reverse direction — row 2 starts from far right */
+@keyframes scroll-infinity-rtl {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* =========================================
+   Testimonials Gallery — Dual infinite row
+========================================= */
+.testimonials {
+  padding: 4rem 0;
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-separator-subtle);
+  overflow: hidden;
+}
+
+.testimonials__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-inline: 1.5rem;
+}
+
+.testimonials__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 500;
+  color: var(--color-label);
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem 0;
+}
+
+.testimonials__subtitle {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-label-secondary);
+  font-weight: 400;
+  margin: 0;
+}
+
+/* One slider row container */
+.testimonials__slider {
+  position: relative;
+  overflow: hidden;
+  /* Fade edges left & right for seamless look */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  margin-bottom: 1rem;
+}
+
+.testimonials__slider:last-child {
+  margin-bottom: 0;
+}
+
+/* Track scrolls horizontally; width is content-driven */
+.testimonials__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Row 1: slides left→right (standard) */
+.testimonials__track--ltr {
+  animation: scroll-infinity 28s linear infinite;
+}
+
+/* Row 2: slides right→left (reversed) */
+.testimonials__track--rtl {
+  animation: scroll-infinity-rtl 28s linear infinite;
+}
+
+/* Pause on hover */
+.testimonials__track:hover {
+  animation-play-state: paused;
+}
+
+/* One image group (contains all images in a row) */
+.testimonials__group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: 1rem; /* Gap between group end and duplicate group start */
+}
+
+.testimonials__group img {
+  width: 220px;
+  height: 275px;        /* 4:5 — 220 × (5/4) = 275 */
+  object-fit: cover;
+  object-position: center;
+  border-radius: 4%;    /* Rounded corners 4% */
+  flex-shrink: 0;
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonials__group img:hover {
+  transform: scale(1.03);
+  box-shadow: var(--shadow-md);
+}
+
+/* Tighter images on mobile */
+@media (max-width: 640px) {
+  .testimonials__group img {
+    width: 160px;
+    height: 200px;  /* 4:5 ratio */
+  }
+  .testimonials__group {
+    gap: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .testimonials__track--ltr,
+  .testimonials__track--rtl {
+    animation-duration: 20s; /* slightly faster on mobile */
+  }
+}
+
+
+
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.875rem;
+  margin-bottom: 1.25rem;
+  border-radius: 980px;
+  border: 1px solid var(--color-separator);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--color-label-secondary);
+}
+
+.hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--color-label);
+  margin: 0;
+}
+
+.hero__subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-label-secondary);
+  max-width: 680px;
+  margin: 0 auto;
+  text-wrap: balance;
+}
+
+/* CTA Area */
+.hero__cta-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.hero__cta-note {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-label-secondary);
+  letter-spacing: 0.01em;
+}
+
+.hero__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border-radius: 980px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Base Green Gradient Glow Effect */
+.btn-glow-green {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-glow-green::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.btn-glow-green:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-glow-green:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.btn-glow-green:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.4);
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: calc(var(--navbar-height) + 3rem);
+    padding-bottom: 3rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2.6rem, 8vw, 3.2rem);
+  }
+}
