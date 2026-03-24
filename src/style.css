@@ -309,6 +309,9 @@ html[data-theme="light"] .navbar__logo-img--dark  { display: block; }
   display: inline-flex;
   align-items: center;
   padding: 0.4375rem 1rem;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
   border-radius: 980px; /* iOS pill shape */
   font-size: 0.9375rem;
   font-weight: 600;
