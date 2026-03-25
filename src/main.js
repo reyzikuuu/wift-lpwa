@@ -100,17 +100,18 @@ if (slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').
 
 /* =========================================
    Hero — Desktop Model Pair Slideshow
-   Pair 1 (first): slide-in → hold 1.5s → slide-out
-   Pair 2 (second): slide-in → hold 1.5s → slide-out → repeat
-   Timing: slideIn=0.7s, hold=1.5s, slideOut=0.5s
+   Pair 1 (first): premium enter → hold 2.2s → premium leave
+   Pair 2 (second): premium enter → hold 2.2s → premium leave → repeat
+   Timing: enter=1.2s, hold=2.2s, leave=0.8s
    Only runs on desktop (min-width: 769px)
 ========================================= */
 const modelPairs = document.querySelectorAll('.hero__models-pair')
 
 if (modelPairs.length > 1) {
-  const SLIDE_IN  = 700   // ms — matches CSS 0.7s
-  const HOLD      = 1500  // ms
-  const SLIDE_OUT = 500   // ms — matches CSS 0.5s
+  const SLIDE_IN  = 1200  // ms — matches CSS 1.2s
+  const HOLD      = 2200  // ms — elegant longer hold
+  const SLIDE_OUT = 800   // ms — matches CSS 0.8s
+
 
   let modelCurrent = 0
 

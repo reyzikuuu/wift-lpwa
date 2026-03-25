@@ -654,14 +654,13 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
 /* =========================================
    Hero — Desktop Model Images (Right Column)
    flex 1 to maintain 2:1 ratio.
-   Absolute child positioning ensures they don't get cropped.
+   Overflow visible so floating images don't get cut off.
 ========================================= */
 .hero__models {
   flex: 1 1 0;
   position: relative;
   height: 480px;
   display: none;           /* hidden on mobile */
-  /* No overflow:hidden to let images overflow slightly if needed! */
   z-index: 1;              /* Behind text if they overlap */
 }
 
@@ -684,95 +683,88 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   }
 }
 
-/* Each pair fills the right column wrapper */
+/* Each pair occupies the container. Uses flex to arrange the two images */
 .hero__models-pair {
   position: absolute;
   inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   opacity: 0;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
-/* ── Individual image absolute positioning ────────────── */
+/* ── Individual images natural sizing ────────────── */
 .hero__model-img {
-  position: absolute;
-  width: 240px;
-  height: 380px;
-  object-fit: cover;
-  object-position: top center;
-  border-radius: 14px;
+  width: 52%;                  /* Responsive width relative to pair container */
+  max-width: 260px;
+  height: auto;                /* Let natural aspect ratio define height */
+  object-fit: contain;         /* NEVER CROP! */
+  border-radius: 12px;
+  /* Premium soft floating shadow instead of flat images */
+  filter: drop-shadow(0 24px 32px rgba(0, 0, 0, 0.15));
 }
 
-/* Left image anchored to the left of the flex column, offset slightly higher */
+/* Subtle overlap and stagger using margin */
 .hero__model-img--left {
-  left: -20px;
-  bottom: 40px;
+  margin-right: -15%;          /* Creates a nice overlap effect */
+  margin-bottom: 2rem;         /* Staggered higher */
   z-index: 1;
 }
 
-/* Right image anchored to the right, slightly lower */
 .hero__model-img--right {
-  right: -40px;
-  bottom: 0px;
+  margin-bottom: 0;            /* Lower */
   z-index: 2;
 }
 
 /* ── Active pair: fully visible, no animation ─────────── */
 .hero__models-pair.is-active {
   opacity: 1;
+  transform: scale(1) translateY(0);
 }
 
-/* ── Keyframes: independent slide animations ──────────── */
-/* Left image slides in from left */
-@keyframes model-left-enter {
-  from { opacity: 0; transform: translateX(-80px); }
-  to   { opacity: 1; transform: translateX(0); }
+/* ── Premium Apple-style Crossfade Animations ─────────── */
+/* Smooth enter: slight scale down and fade in */
+@keyframes premium-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.06) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
-/* Right image slides in from right */
-@keyframes model-right-enter {
-  from { opacity: 0; transform: translateX(80px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-/* Left image slides out to left */
-@keyframes model-left-leave {
-  from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(-80px); }
-}
-/* Right image slides out to right */
-@keyframes model-right-leave {
-  from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(80px); }
+
+/* Smooth leave: scale down further and fade out */
+@keyframes premium-leave {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(-20px);
+  }
 }
 
 /* ── Entering ──────────────────────────────────────────── */
 .hero__models-pair.is-entering {
-  opacity: 1;
-}
-.hero__models-pair.is-entering .hero__model-img--left {
-  animation: model-left-enter  0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.hero__models-pair.is-entering .hero__model-img--right {
-  animation: model-right-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 0.08s;
+  /* 1.2s duration, ultra-smooth ease-out */
+  animation: premium-enter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 /* ── Leaving ───────────────────────────────────────────── */
 .hero__models-pair.is-leaving {
-  opacity: 1;
-}
-.hero__models-pair.is-leaving .hero__model-img--left {
-  animation: model-left-leave  0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
-}
-.hero__models-pair.is-leaving .hero__model-img--right {
-  animation: model-right-leave 0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
-  animation-delay: 0.06s;
+  /* 0.8s duration, accelerated exit */
+  animation: premium-leave 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 /* ── Reduced motion ────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .hero__models-pair.is-entering .hero__model-img--left,
-  .hero__models-pair.is-entering .hero__model-img--right,
-  .hero__models-pair.is-leaving  .hero__model-img--left,
-  .hero__models-pair.is-leaving  .hero__model-img--right {
+  .hero__models-pair.is-entering,
+  .hero__models-pair.is-leaving {
     animation: none;
   }
 }
