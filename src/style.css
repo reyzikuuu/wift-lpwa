@@ -646,11 +646,10 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   gap: 3rem;
 }
 
-/* Left column: text content */
+/* Left column ratio: flex 2 */
 .hero__content {
-  flex: 1 1 auto;
+  flex: 2 1 0;
   text-align: left;
-  max-width: 560px;
 }
 
 /* Mobile: single col, center text */
@@ -661,20 +660,22 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   }
   .hero__content {
     text-align: center;
+    flex: 1 1 auto;
     max-width: 100%;
   }
 }
 
 /* =========================================
-   Hero — Desktop Model Slideshow (right column)
-   Two pairs: left+right images slide in from sides,
-   hold 1.5s, slide out, next pair slides in.
+   Hero — Desktop Model Slideshow (right col, flex 1)
+   Single keyframes on the whole pair — avoids
+   transform conflicts on individual images.
 ========================================= */
 .hero__models {
+  flex: 1 1 0;          /* ratio 1 (right) vs 2 (left) */
   position: relative;
-  flex: 0 0 600px;   /* Fixed width for the two-image panel */
   height: 460px;
-  display: none;       /* Hidden by default (mobile) */
+  display: none;
+  overflow: visible;
 }
 
 @media (min-width: 769px) {
@@ -683,95 +684,82 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   }
 }
 
-/* Each pair holds two floating model images */
+/* Each pair occupies the full panel */
 .hero__models-pair {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.75rem;
+  /* Hidden until active */
+  opacity: 0;
   pointer-events: none;
-}
-
-/* Model images */
-.hero__model-img {
-  width: 280px;
-  height: 420px;
-  object-fit: cover;
-  object-position: top center;
-  border-radius: 16px;
-  flex-shrink: 0;
   will-change: transform, opacity;
 }
 
-/* Offset: left image sits slightly higher */
-.hero__model-img--left  { transform: translateY(-20px); }
-.hero__model-img--right { transform: translateY(0px); }
-
-/* ── State machine via JS-toggled classes ──────────────── */
-
-/* Hidden by default (non-active pair) */
-.hero__models-pair {
-  opacity: 0;
-  pointer-events: none;
+/* Images: static sizing only, NO transform offset here */
+.hero__model-img {
+  width: 48%;          /* Responsive within the column */
+  max-width: 220px;
+  height: 380px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 14px;
+  flex-shrink: 0;
+  display: block;
 }
 
-/* SLIDE-IN from sides — triggered when pair gets .is-entering */
-@keyframes model-slide-in-left {
-  from { opacity: 0; transform: translateX(-80px) translateY(-20px); }
-  to   { opacity: 1; transform: translateX(0)     translateY(-20px); }
-}
-@keyframes model-slide-in-right {
-  from { opacity: 0; transform: translateX(80px)  translateY(0); }
-  to   { opacity: 1; transform: translateX(0)     translateY(0); }
+/* Slight vertical stagger via margin on the right image */
+.hero__model-img--right {
+  margin-bottom: -20px;
 }
 
-/* SLIDE-OUT to sides — triggered when pair gets .is-leaving */
-@keyframes model-slide-out-left {
-  from { opacity: 1; transform: translateX(0)     translateY(-20px); }
-  to   { opacity: 0; transform: translateX(-80px) translateY(-20px); }
-}
-@keyframes model-slide-out-right {
-  from { opacity: 1; transform: translateX(0)     translateY(0); }
-  to   { opacity: 0; transform: translateX(80px)  translateY(0); }
+/* ── Keyframes on the PAIR — one clean unit ──────────── */
+/* Slide in: pair comes from the right as a whole */
+@keyframes models-enter {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-/* Active pair: visible, images unanimated (after slide-in completes) */
+/* Slide out: pair exits to the left */
+@keyframes models-leave {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+}
+
+/* Active: fully visible, no animation */
 .hero__models-pair.is-active {
   opacity: 1;
+  transform: translateX(0);
 }
 
-/* Pair entering */
+/* Entering state */
 .hero__models-pair.is-entering {
-  opacity: 1;
-}
-.hero__models-pair.is-entering .hero__model-img--left {
-  animation: model-slide-in-left  0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.hero__models-pair.is-entering .hero__model-img--right {
-  animation: model-slide-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 0.08s;
+  animation: models-enter 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Pair leaving */
+/* Leaving state */
 .hero__models-pair.is-leaving {
-  opacity: 1;
-}
-.hero__models-pair.is-leaving .hero__model-img--left {
-  animation: model-slide-out-left  0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
-}
-.hero__models-pair.is-leaving .hero__model-img--right {
-  animation: model-slide-out-right 0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
-  animation-delay: 0.06s;
+  animation: models-leave 0.45s cubic-bezier(0.55, 0, 0.7, 1) forwards;
 }
 
-/* Prefers-reduced-motion: skip animations */
+/* Reduced motion: skip all animations */
 @media (prefers-reduced-motion: reduce) {
-  .hero__models-pair.is-entering .hero__model-img--left,
-  .hero__models-pair.is-entering .hero__model-img--right,
-  .hero__models-pair.is-leaving  .hero__model-img--left,
-  .hero__models-pair.is-leaving  .hero__model-img--right {
+  .hero__models-pair.is-entering,
+  .hero__models-pair.is-leaving {
     animation: none;
   }
 }
