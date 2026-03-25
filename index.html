@@ -67,7 +67,7 @@
   <link rel="preload" as="image" href="/images/hero-header/vendor-kemeja-uniform-kain-super-premium-01.webp"
     fetchpriority="high" />
   <script type="module" crossorigin src="/assets/index.BcBx5FGa.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/style.CmQgPliP.css">
+  <link rel="stylesheet" crossorigin href="/assets/style.CaRFXU-j.css">
 </head>
 
 <body>
@@ -168,7 +168,7 @@
   <main id="main-content">
     <section class="hero" aria-labelledby="hero-heading">
 
-      <!-- Background Slideshow Layer -->
+      <!-- Background Slideshow Layer (mobile) -->
       <div class="hero__bg" aria-hidden="true">
         <img src="/images/hero-header/vendor-kemeja-uniform-kain-super-premium-01.webp" alt=""
           class="hero__bg-slide hero__bg-slide--1 is-active" width="800" height="600" fetchpriority="high"
@@ -181,9 +181,30 @@
           decoding="async" />
       </div>
 
-      <div class="hero__container">
+      <!-- Desktop Model Images — absolute layer behind content, desktop only -->
+      <div class="hero__models" aria-hidden="true">
+        <!-- Pair 1 -->
+        <div class="hero__models-pair hero__models-pair--1 is-active">
+          <img src="/images/hero-img-desktop/model-hero-left-first.webp"
+            alt="" class="hero__model-img hero__model-img--left"
+            width="320" height="480" fetchpriority="high" decoding="async" />
+          <img src="/images/hero-img-desktop/model-hero-right-first.webp"
+            alt="" class="hero__model-img hero__model-img--right"
+            width="320" height="480" fetchpriority="high" decoding="async" />
+        </div>
+        <!-- Pair 2 -->
+        <div class="hero__models-pair hero__models-pair--2">
+          <img src="/images/hero-img-desktop/model-hero-left-second.webp"
+            alt="" class="hero__model-img hero__model-img--left"
+            width="320" height="480" loading="lazy" decoding="async" />
+          <img src="/images/hero-img-desktop/model-hero-right-second.webp"
+            alt="" class="hero__model-img hero__model-img--right"
+            width="320" height="480" loading="lazy" decoding="async" />
+        </div>
+      </div>
 
-        <!-- Left column: text content -->
+      <!-- Text content — centred above the model images -->
+      <div class="hero__container">
         <div class="hero__content">
           <div class="hero__badge">Indonesia Trusted Uniform Brand</div>
           <h1 id="hero-heading" class="hero__title">
@@ -203,30 +224,8 @@
             </button>
           </div>
         </div>
-
-        <!-- Right column: desktop model slideshow (hidden on mobile) -->
-        <div class="hero__models" aria-hidden="true">
-          <!-- Pair 1 -->
-          <div class="hero__models-pair hero__models-pair--1 is-active">
-            <img src="/images/hero-img-desktop/model-hero-left-first.webp"
-              alt="Model kemeja WIFT kiri" class="hero__model-img hero__model-img--left"
-              width="280" height="420" fetchpriority="high" decoding="async" />
-            <img src="/images/hero-img-desktop/model-hero-right-first.webp"
-              alt="Model kemeja WIFT kanan" class="hero__model-img hero__model-img--right"
-              width="280" height="420" fetchpriority="high" decoding="async" />
-          </div>
-          <!-- Pair 2 -->
-          <div class="hero__models-pair hero__models-pair--2">
-            <img src="/images/hero-img-desktop/model-hero-left-second.webp"
-              alt="Model kemeja WIFT kedua kiri" class="hero__model-img hero__model-img--left"
-              width="280" height="420" loading="lazy" decoding="async" />
-            <img src="/images/hero-img-desktop/model-hero-right-second.webp"
-              alt="Model kemeja WIFT kedua kanan" class="hero__model-img hero__model-img--right"
-              width="280" height="420" loading="lazy" decoding="async" />
-          </div>
-        </div>
-
       </div>
+
     </section>
     <!-- ==================== END HERO ==================== -->
 
