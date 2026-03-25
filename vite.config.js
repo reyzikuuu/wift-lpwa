@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 export default defineConfig({
 
-    plugins: [
-        tailwindcss(),
-    ],
+    plugins: [tailwindcss(), cloudflare()],
 
     build: {
         // Target browser yang luas
@@ -36,4 +36,3 @@ export default defineConfig({
         },
     },
 })
-
