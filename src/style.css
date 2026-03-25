@@ -639,9 +639,143 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
 .hero__container {
   position: relative;
   z-index: 1;
-  max-width: 900px;
+  max-width: 1160px;
   margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
 }
+
+/* Left column: text content */
+.hero__content {
+  flex: 1 1 auto;
+  text-align: left;
+  max-width: 560px;
+}
+
+/* Mobile: single col, center text */
+@media (max-width: 768px) {
+  .hero__container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero__content {
+    text-align: center;
+    max-width: 100%;
+  }
+}
+
+/* =========================================
+   Hero — Desktop Model Slideshow (right column)
+   Two pairs: left+right images slide in from sides,
+   hold 1.5s, slide out, next pair slides in.
+========================================= */
+.hero__models {
+  position: relative;
+  flex: 0 0 600px;   /* Fixed width for the two-image panel */
+  height: 460px;
+  display: none;       /* Hidden by default (mobile) */
+}
+
+@media (min-width: 769px) {
+  .hero__models {
+    display: block;
+  }
+}
+
+/* Each pair holds two floating model images */
+.hero__models-pair {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+/* Model images */
+.hero__model-img {
+  width: 280px;
+  height: 420px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 16px;
+  flex-shrink: 0;
+  will-change: transform, opacity;
+}
+
+/* Offset: left image sits slightly higher */
+.hero__model-img--left  { transform: translateY(-20px); }
+.hero__model-img--right { transform: translateY(0px); }
+
+/* ── State machine via JS-toggled classes ──────────────── */
+
+/* Hidden by default (non-active pair) */
+.hero__models-pair {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* SLIDE-IN from sides — triggered when pair gets .is-entering */
+@keyframes model-slide-in-left {
+  from { opacity: 0; transform: translateX(-80px) translateY(-20px); }
+  to   { opacity: 1; transform: translateX(0)     translateY(-20px); }
+}
+@keyframes model-slide-in-right {
+  from { opacity: 0; transform: translateX(80px)  translateY(0); }
+  to   { opacity: 1; transform: translateX(0)     translateY(0); }
+}
+
+/* SLIDE-OUT to sides — triggered when pair gets .is-leaving */
+@keyframes model-slide-out-left {
+  from { opacity: 1; transform: translateX(0)     translateY(-20px); }
+  to   { opacity: 0; transform: translateX(-80px) translateY(-20px); }
+}
+@keyframes model-slide-out-right {
+  from { opacity: 1; transform: translateX(0)     translateY(0); }
+  to   { opacity: 0; transform: translateX(80px)  translateY(0); }
+}
+
+/* Active pair: visible, images unanimated (after slide-in completes) */
+.hero__models-pair.is-active {
+  opacity: 1;
+}
+
+/* Pair entering */
+.hero__models-pair.is-entering {
+  opacity: 1;
+}
+.hero__models-pair.is-entering .hero__model-img--left {
+  animation: model-slide-in-left  0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero__models-pair.is-entering .hero__model-img--right {
+  animation: model-slide-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.08s;
+}
+
+/* Pair leaving */
+.hero__models-pair.is-leaving {
+  opacity: 1;
+}
+.hero__models-pair.is-leaving .hero__model-img--left {
+  animation: model-slide-out-left  0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
+}
+.hero__models-pair.is-leaving .hero__model-img--right {
+  animation: model-slide-out-right 0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
+  animation-delay: 0.06s;
+}
+
+/* Prefers-reduced-motion: skip animations */
+@media (prefers-reduced-motion: reduce) {
+  .hero__models-pair.is-entering .hero__model-img--left,
+  .hero__models-pair.is-entering .hero__model-img--right,
+  .hero__models-pair.is-leaving  .hero__model-img--left,
+  .hero__models-pair.is-leaving  .hero__model-img--right {
+    animation: none;
+  }
+}
+
 
 /* =========================================
    Social Proof Banner

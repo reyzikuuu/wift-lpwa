@@ -99,6 +99,56 @@ if (slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').
 }
 
 /* =========================================
+   Hero — Desktop Model Pair Slideshow
+   Pair 1 (first): slide-in → hold 1.5s → slide-out
+   Pair 2 (second): slide-in → hold 1.5s → slide-out → repeat
+   Timing: slideIn=0.7s, hold=1.5s, slideOut=0.5s
+   Only runs on desktop (min-width: 769px)
+========================================= */
+const modelPairs = document.querySelectorAll('.hero__models-pair')
+
+if (modelPairs.length > 1) {
+  const SLIDE_IN  = 700   // ms — matches CSS 0.7s
+  const HOLD      = 1500  // ms
+  const SLIDE_OUT = 500   // ms — matches CSS 0.5s
+
+  let modelCurrent = 0
+
+  function runModelSlideshow() {
+    const pairs = modelPairs
+    const current = modelCurrent
+    const next = (current + 1) % pairs.length
+
+    // Mark current pair as leaving (slide-out animation starts)
+    pairs[current].classList.remove('is-active')
+    pairs[current].classList.add('is-leaving')
+
+    // After slide-out completes, hide it and start next pair
+    setTimeout(() => {
+      pairs[current].classList.remove('is-leaving')
+
+      // Slide the next pair in
+      pairs[next].classList.add('is-entering')
+
+      // After slide-in completes, set it as active (stable)
+      setTimeout(() => {
+        pairs[next].classList.remove('is-entering')
+        pairs[next].classList.add('is-active')
+        modelCurrent = next
+
+        // Hold, then trigger next cycle
+        setTimeout(runModelSlideshow, HOLD)
+      }, SLIDE_IN)
+    }, SLIDE_OUT)
+  }
+
+  // Initial pair is already .is-active; after initial hold, start cycling
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setTimeout(runModelSlideshow, HOLD)
+  }
+}
+
+/* =========================================
    Theme Toggle — Dark / Light
    Shared function untuk desktop & mobile button
 ========================================= */
