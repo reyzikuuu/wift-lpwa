@@ -647,21 +647,21 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
 }
 
 .hero__content {
-  flex: 2 1 0;
+  flex: 1.5 1 0;               /* Changed from 2 to 1.5 for a 60/40 balanced split */
   text-align: left;
 }
 
 /* =========================================
    Hero — Desktop Model Images (Right Column)
-   flex 1 to maintain 2:1 ratio.
+   flex 1 to maintain 1.5:1 ratio (60% text, 40% models).
    Overflow visible so floating images don't get cut off.
 ========================================= */
 .hero__models {
   flex: 1 1 0;
   position: relative;
-  height: 480px;
-  display: none;           /* hidden on mobile */
-  z-index: 1;              /* Behind text if they overlap */
+  height: 540px;               /* Increased height for larger images */
+  display: none;               /* hidden on mobile */
+  z-index: 1;                  /* Behind text if they overlap */
 }
 
 @media (min-width: 769px) {
@@ -697,8 +697,8 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
 
 /* ── Individual images natural sizing ────────────── */
 .hero__model-img {
-  width: 52%;                  /* Responsive width relative to pair container */
-  max-width: 260px;
+  width: 62%;                  /* Larger width for more prominent display */
+  max-width: 320px;            /* Increased max width completely */
   height: auto;                /* Let natural aspect ratio define height */
   object-fit: contain;         /* NEVER CROP! */
   border-radius: 12px;
