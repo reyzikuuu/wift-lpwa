@@ -635,47 +635,33 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   }
 }
 
-/* Konten di atas background */
+/* ── Hero container: single-column centred text ─────── */
 .hero__container {
   position: relative;
-  z-index: 1;
-  max-width: 1160px;
+  z-index: 2;              /* Above the model images */
+  max-width: 800px;
   margin-inline: auto;
-  display: flex;
-  align-items: center;
-  gap: 3rem;
+  text-align: center;
 }
 
-/* Left column ratio: flex 2 */
 .hero__content {
-  flex: 2 1 0;
-  text-align: left;
-}
-
-/* Mobile: single col, center text */
-@media (max-width: 768px) {
-  .hero__container {
-    flex-direction: column;
-    text-align: center;
-  }
-  .hero__content {
-    text-align: center;
-    flex: 1 1 auto;
-    max-width: 100%;
-  }
+  text-align: center;
 }
 
 /* =========================================
-   Hero — Desktop Model Slideshow (right col, flex 1)
-   Single keyframes on the whole pair — avoids
-   transform conflicts on individual images.
+   Hero — Desktop Model Images (absolute layer)
+   Each image is pinned to its side of the hero.
+   Left image: slides in from the left edge.
+   Right image: slides in from the right edge.
+   Desktop only (≥ 769px).
 ========================================= */
 .hero__models {
-  flex: 1 1 0;          /* ratio 1 (right) vs 2 (left) */
-  position: relative;
-  height: 460px;
-  display: none;
-  overflow: visible;
+  display: none;           /* hidden on mobile */
+  position: absolute;
+  inset: 0;
+  z-index: 1;              /* Behind text content */
+  pointer-events: none;
+  overflow: hidden;
 }
 
 @media (min-width: 769px) {
@@ -684,82 +670,90 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   }
 }
 
-/* Each pair occupies the full panel */
+/* Each pair fills the hero space */
 .hero__models-pair {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 0.75rem;
-  /* Hidden until active */
   opacity: 0;
   pointer-events: none;
-  will-change: transform, opacity;
 }
 
-/* Images: static sizing only, NO transform offset here */
+/* ── Individual image positioning ─────────────────────── */
+/* Both images are absolutely pinned to bottom of hero */
 .hero__model-img {
-  width: 48%;          /* Responsive within the column */
-  max-width: 220px;
-  height: 380px;
+  position: absolute;
+  bottom: 0;
+  width: auto;
+  height: 92%;              /* Tall — fills most of hero height */
+  max-height: 640px;
   object-fit: cover;
   object-position: top center;
-  border-radius: 14px;
-  flex-shrink: 0;
-  display: block;
+  border-radius: 16px 16px 0 0;
 }
 
-/* Slight vertical stagger via margin on the right image */
+/* Left image anchored to the left edge */
+.hero__model-img--left {
+  left: 2%;
+}
+
+/* Right image anchored to the right edge */
 .hero__model-img--right {
-  margin-bottom: -20px;
+  right: 2%;
 }
 
-/* ── Keyframes on the PAIR — one clean unit ──────────── */
-/* Slide in: pair comes from the right as a whole */
-@keyframes models-enter {
-  from {
-    opacity: 0;
-    transform: translateX(48px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Slide out: pair exits to the left */
-@keyframes models-leave {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-48px);
-  }
-}
-
-/* Active: fully visible, no animation */
+/* ── Active pair: fully visible, no animation ─────────── */
 .hero__models-pair.is-active {
   opacity: 1;
-  transform: translateX(0);
 }
 
-/* Entering state */
+/* ── Keyframes: each image animates from its own side ─── */
+@keyframes model-left-enter {
+  from { opacity: 0; transform: translateX(-120px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes model-right-enter {
+  from { opacity: 0; transform: translateX(120px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes model-left-leave {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-120px); }
+}
+@keyframes model-right-leave {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(120px); }
+}
+
+/* ── Entering ──────────────────────────────────────────── */
 .hero__models-pair.is-entering {
-  animation: models-enter 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 1;
+}
+.hero__models-pair.is-entering .hero__model-img--left {
+  animation: model-left-enter  0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero__models-pair.is-entering .hero__model-img--right {
+  animation: model-right-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.06s;
 }
 
-/* Leaving state */
+/* ── Leaving ───────────────────────────────────────────── */
 .hero__models-pair.is-leaving {
-  animation: models-leave 0.45s cubic-bezier(0.55, 0, 0.7, 1) forwards;
+  opacity: 1;
+}
+.hero__models-pair.is-leaving .hero__model-img--left {
+  animation: model-left-leave  0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
+}
+.hero__models-pair.is-leaving .hero__model-img--right {
+  animation: model-right-leave 0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
+  animation-delay: 0.05s;
 }
 
-/* Reduced motion: skip all animations */
+/* ── Reduced motion ────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .hero__models-pair.is-entering,
-  .hero__models-pair.is-leaving {
+  .hero__models-pair.is-entering .hero__model-img--left,
+  .hero__models-pair.is-entering .hero__model-img--right,
+  .hero__models-pair.is-leaving  .hero__model-img--left,
+  .hero__models-pair.is-leaving  .hero__model-img--right {
     animation: none;
   }
 }
