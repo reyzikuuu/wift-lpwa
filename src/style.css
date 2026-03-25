@@ -635,33 +635,34 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   }
 }
 
-/* ── Hero container: single-column centred text ─────── */
+/* ── Hero container: 2:1 Flex Layout ─────── */
 .hero__container {
   position: relative;
   z-index: 2;              /* Above the model images */
-  max-width: 800px;
+  max-width: 1160px;
   margin-inline: auto;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
 }
 
 .hero__content {
-  text-align: center;
+  flex: 2 1 0;
+  text-align: left;
 }
 
 /* =========================================
-   Hero — Desktop Model Images (absolute layer)
-   Each image is pinned to its side of the hero.
-   Left image: slides in from the left edge.
-   Right image: slides in from the right edge.
-   Desktop only (≥ 769px).
+   Hero — Desktop Model Images (Right Column)
+   flex 1 to maintain 2:1 ratio.
+   Absolute child positioning ensures they don't get cropped.
 ========================================= */
 .hero__models {
+  flex: 1 1 0;
+  position: relative;
+  height: 480px;
   display: none;           /* hidden on mobile */
-  position: absolute;
-  inset: 0;
-  z-index: 1;              /* Behind text content */
-  pointer-events: none;
-  overflow: hidden;
+  /* No overflow:hidden to let images overflow slightly if needed! */
+  z-index: 1;              /* Behind text if they overlap */
 }
 
 @media (min-width: 769px) {
@@ -670,7 +671,20 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   }
 }
 
-/* Each pair fills the hero space */
+/* Mobile: single col, center text */
+@media (max-width: 768px) {
+  .hero__container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero__content {
+    text-align: center;
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
+}
+
+/* Each pair fills the right column wrapper */
 .hero__models-pair {
   position: absolute;
   inset: 0;
@@ -678,27 +692,28 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   pointer-events: none;
 }
 
-/* ── Individual image positioning ─────────────────────── */
-/* Both images are absolutely pinned to bottom of hero */
+/* ── Individual image absolute positioning ────────────── */
 .hero__model-img {
   position: absolute;
-  bottom: 0;
-  width: auto;
-  height: 92%;              /* Tall — fills most of hero height */
-  max-height: 640px;
+  width: 240px;
+  height: 380px;
   object-fit: cover;
   object-position: top center;
-  border-radius: 16px 16px 0 0;
+  border-radius: 14px;
 }
 
-/* Left image anchored to the left edge */
+/* Left image anchored to the left of the flex column, offset slightly higher */
 .hero__model-img--left {
-  left: 2%;
+  left: -20px;
+  bottom: 40px;
+  z-index: 1;
 }
 
-/* Right image anchored to the right edge */
+/* Right image anchored to the right, slightly lower */
 .hero__model-img--right {
-  right: 2%;
+  right: -40px;
+  bottom: 0px;
+  z-index: 2;
 }
 
 /* ── Active pair: fully visible, no animation ─────────── */
@@ -706,22 +721,26 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   opacity: 1;
 }
 
-/* ── Keyframes: each image animates from its own side ─── */
+/* ── Keyframes: independent slide animations ──────────── */
+/* Left image slides in from left */
 @keyframes model-left-enter {
-  from { opacity: 0; transform: translateX(-120px); }
+  from { opacity: 0; transform: translateX(-80px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+/* Right image slides in from right */
 @keyframes model-right-enter {
-  from { opacity: 0; transform: translateX(120px); }
+  from { opacity: 0; transform: translateX(80px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+/* Left image slides out to left */
 @keyframes model-left-leave {
   from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(-120px); }
+  to   { opacity: 0; transform: translateX(-80px); }
 }
+/* Right image slides out to right */
 @keyframes model-right-leave {
   from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(120px); }
+  to   { opacity: 0; transform: translateX(80px); }
 }
 
 /* ── Entering ──────────────────────────────────────────── */
@@ -733,7 +752,7 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
 }
 .hero__models-pair.is-entering .hero__model-img--right {
   animation: model-right-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 0.06s;
+  animation-delay: 0.08s;
 }
 
 /* ── Leaving ───────────────────────────────────────────── */
@@ -745,7 +764,7 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
 }
 .hero__models-pair.is-leaving .hero__model-img--right {
   animation: model-right-leave 0.5s cubic-bezier(0.55, 0, 0.7, 1) forwards;
-  animation-delay: 0.05s;
+  animation-delay: 0.06s;
 }
 
 /* ── Reduced motion ────────────────────────────────────── */
