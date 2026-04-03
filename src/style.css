@@ -1095,6 +1095,43 @@ html[data-theme="light"] .navbar__theme-toggle .icon-moon { display: block; }
   margin: 0;
 }
 
+/* ── Headline Rotator ──────────────────────── */
+.hero__title-rotator {
+  display: block;
+  position: relative;
+  min-height: 3.5em;       /* Reserve space to prevent layout shift */
+}
+
+.hero__title-slide {
+  display: block;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.hero__title-slide.is-active {
+  position: relative;      /* Active slide takes space in flow */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.hero__title-slide.is-leaving {
+  opacity: 0;
+  transform: translateY(-16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__title-slide {
+    transition: none;
+    transform: none;
+  }
+}
+
 .hero__subtitle {
   font-family: var(--font-body);
   font-size: clamp(1rem, 2vw, 1.125rem);

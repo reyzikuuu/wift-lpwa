@@ -150,6 +150,38 @@ if (modelPairs.length > 1) {
 }
 
 /* =========================================
+   Hero — Headline Text Rotator
+   3 kalimat bergantian dengan fade + slide
+   Timing: hold 4s, transition 0.6s (CSS)
+========================================= */
+const titleSlides = document.querySelectorAll('.hero__title-slide')
+
+if (titleSlides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const TITLE_HOLD = 4000       // ms — hold each headline
+  const TITLE_TRANSITION = 600  // ms — matches CSS 0.6s
+  let titleCurrent = 0
+
+  setInterval(() => {
+    const current = titleCurrent
+    const next = (current + 1) % titleSlides.length
+
+    // Current slide: remove active, add leaving for exit animation
+    titleSlides[current].classList.remove('is-active')
+    titleSlides[current].classList.add('is-leaving')
+
+    // Next slide: activate (CSS transition handles the entrance)
+    titleSlides[next].classList.add('is-active')
+
+    // Clean up leaving class after transition completes
+    setTimeout(() => {
+      titleSlides[current].classList.remove('is-leaving')
+    }, TITLE_TRANSITION)
+
+    titleCurrent = next
+  }, TITLE_HOLD)
+}
+
+/* =========================================
    Theme Toggle — Dark / Light
    Shared function untuk desktop & mobile button
 ========================================= */
