@@ -61,11 +61,30 @@
        DNS Prefetch untuk domain tracking/CDN
        Tambahkan domain pihak ketiga yang kamu pakai
   ========================================== -->
-  <!-- <link rel="dns-prefetch" href="https://connect.facebook.net" /> -->
+  <link rel="dns-prefetch" href="https://connect.facebook.net" />
   <!-- <link rel="dns-prefetch" href="https://www.googletagmanager.com" /> -->
   <!-- Preload LCP image (hero background, mobile) - percepat Largest Contentful Paint -->
   <link rel="preload" as="image" href="/images/hero-header/vendor-kemeja-uniform-kain-super-premium-01.webp"
     fetchpriority="high" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1468944331543356');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1468944331543356&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <script type="module" crossorigin src="/assets/index.10CeGo46.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/style.DkVy6RUf.css">
 </head>
@@ -599,23 +618,8 @@
 
   <!-- JS utama -->
 
-  <!--
-    TRACKING SCRIPTS (Pihak Ketiga)
-    Uncomment dan isi sesuai kebutuhanmu:
-  -->
-  <!--
-  <script>
-    window.addEventListener('load', function () {
-      // Meta Pixel
-      // !function(f,b,e,v,n,t,s){...}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-      // fbq('init', 'YOUR_PIXEL_ID');
-      // fbq('track', 'PageView');
-
-      // Google Tag Manager
-      // (function(w,d,s,l,i){...})(window,document,'script','dataLayer','GTM-XXXXXXX');
-    });
-  </script>
-  -->
+  <!-- Meta Pixel sudah dipasang di <head> -->
+  <!-- Event tracking Contact sudah ada di WA Scrapper di bawah -->
   <!-- Script WA Scrapper -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
